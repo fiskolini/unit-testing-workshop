@@ -1,0 +1,10 @@
+# IDE Stuff
+.idea
+
+# Unrequired directores
+vendor
+html-coverage
+
+# Unrequired files
+tests/**/*.cache
+.phpunit.result.cache
