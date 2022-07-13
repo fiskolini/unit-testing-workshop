@@ -37,6 +37,9 @@ final class Discount
             case self::TYPE_AMOUNT:
                 $discountAmount = (int)$this->value;
                 break;
+            default:
+                // TODO Should throw an exception
+                break;
         }
 
         return new Amount($discountAmount);
