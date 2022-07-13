@@ -27,12 +27,11 @@ final class DoctrineProductRepository implements ProductRepository
     {
         $productDtos = $this->entityManager
             ->createQueryBuilder()
-            ->select('product', 'discount.name')
+            ->select('product', 'discount')
             ->from(\App\Entity\Product::class, 'product')
             ->leftJoin('product.discounts', 'discount')
             ->getQuery()
             ->execute();
-
 
         return array_map(function (\App\Entity\Product $productDto): Product {
             return new Product(
