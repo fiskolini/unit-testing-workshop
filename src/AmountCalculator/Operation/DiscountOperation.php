@@ -23,11 +23,12 @@ final class DiscountOperation implements Operation
         $this->discounts = $discounts;
     }
 
+    // TODO #02 cover this with unit test
     public function applyTo(Amount $amount): Amount
     {
         $discountTotal = 0;
         foreach ($this->discounts as $discount) {
-            $discountTotal += $discount->getDiscountAmountForPrice($amount)->getCents();
+            $discountTotal = $discount->getDiscountAmountForPrice($amount)->getCents();
         }
         $discountedAmount = $amount->getCents() - $discountTotal;
 

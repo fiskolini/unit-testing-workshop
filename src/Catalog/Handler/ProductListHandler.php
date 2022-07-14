@@ -23,7 +23,7 @@ final class ProductListHandler extends ProductHandler implements RequestHandlerI
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $products = $this->productRepository->findProducts();
-        // TODO cover this with unit test
+        // TODO #03 cover this with unit test
         $this->searchAnalytics->track(['price' => null, 'name' => null]);
 
         return $this->createProductsResponse($products);

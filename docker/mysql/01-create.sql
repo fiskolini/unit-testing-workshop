@@ -7,7 +7,6 @@ CREATE TABLE `product`
     `id`     int(10) unsigned NOT NULL AUTO_INCREMENT,
     `name`   varchar(255)     NOT NULL,
     `cost`   int(8) unsigned  NOT NULL,
-    `markup` int(8) unsigned  NOT NULL,
     PRIMARY KEY (`id`),
     KEY `idx_name` (`name`)
 ) ENGINE = InnoDB
@@ -17,11 +16,11 @@ DROP TABLE IF EXISTS `discount`;
 
 CREATE TABLE `discount`
 (
-    `id`         int(10) unsigned    NOT NULL AUTO_INCREMENT,
-    `product_id` int(10) unsigned    NOT NULL,
-    `name`       varchar(255)        NOT NULL,
-    `type`       tinyint(1) unsigned NOT NULL,
-    `value`      int(8) unsigned     NOT NULL,
+    `id`         int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `product_id` int(10) unsigned NOT NULL,
+    `name`       varchar(255)     NOT NULL,
+    `type`       varchar(10)      NOT NULL,
+    `value`      int(8) unsigned  NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB

@@ -36,13 +36,6 @@ class Product
     public $cost;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="markup", type="integer", nullable=false, options={"unsigned"=true})
-     */
-    public $markup;
-
-    /**
      * @var Discount[]|\Doctrine\ORM\PersistentCollection
      *
      * @ORM\OneToMany(targetEntity="Discount", mappedBy="product")

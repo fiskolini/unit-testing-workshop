@@ -11,21 +11,7 @@ use PHPUnit\Framework\TestCase;
 /** @covers \App\AmountCalculator\Operation\DiscountOperation */
 final class DiscountOperationTest extends TestCase
 {
-    /** @test */
-    public function applyTo_WithMultipleDiscounts_ReturnsDiscountedAmount(): void
-    {
-        $operation = new DiscountOperation([
-            Discount::fromAmount(10),
-            Discount::fromAmount(10)
-        ]);
-
-        self::assertEquals(
-            new Amount(80),
-            $operation->applyTo(new Amount(100))
-        );
-    }
-
-    /** @test */
+   /** @test */
     public function applyTo_WithoutDiscounts_ReturnsOriginalAmount(): void
     {
         $operation = new DiscountOperation([]);

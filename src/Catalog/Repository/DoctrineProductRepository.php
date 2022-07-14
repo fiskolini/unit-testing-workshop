@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace App\Catalog\Repository;
 
-use App\AmountCalculator\AmountCalculator;
 use App\AmountCalculator\Operation\DiscountOperation;
-use App\AmountCalculator\Operation\MarkupOperation;
 use App\Catalog\Value\Amount;
 use App\Catalog\Value\Discount;
 use App\Catalog\Value\Product;
@@ -44,16 +42,19 @@ final class DoctrineProductRepository implements ProductRepository
     private function getProductPrice(\App\Entity\Product $productDto): Amount
     {
         $cost = new Amount($productDto->cost);
-        $priceOperations = [];
-        $priceOperations[] = new MarkupOperation($productDto->markup / 100);
 
-        foreach ($productDto->discounts as $discountDto) {
-            $discount = $this->getProductDiscount($discountDto);
-            $priceOperations[] = new DiscountOperation([$discount]);
+        // No discounts, so return its main value
+        if ($productDto->discounts->isEmpty()) {
+            return $cost;
         }
 
-        return (new AmountCalculator())
-            ->getResult($cost, $priceOperations);
+        $priceOperations = [];
+
+        foreach ($productDto->discounts as $discountDto) {
+            $priceOperations[] = $this->getProductDiscount($discountDto);
+        }
+
+        return (new DiscountOperation($priceOperations))->applyTo($cost);
     }
 
     private function getProductDiscount(\App\Entity\Discount $discountDto): Discount
@@ -61,10 +62,5 @@ final class DoctrineProductRepository implements ProductRepository
         return $discountDto->type === 'amount' ?
             Discount::fromAmount($discountDto->value) :
             Discount::fromPercent((float)$discountDto->value / 100);
-    }
-
-    public function getTableName(): string
-    {
-        return 'product';
     }
 }

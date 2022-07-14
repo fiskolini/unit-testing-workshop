@@ -8,8 +8,6 @@ use App\Catalog\Repository\DoctrineProductRepository;
 use App\Catalog\Repository\ProductRepository;
 use App\Catalog\SearchAnalytics\FilesystemSearchAnalytics;
 use App\Catalog\SearchAnalytics\SearchAnalytics;
-use App\Clock\Clock;
-use App\Clock\DateTimeClock;
 use DI;
 use DI\Container;
 use Doctrine\DBAL\Connection;
@@ -50,7 +48,6 @@ final class DependencyInjection
         }));
         $di->set(ProductRepository::class, DI\autowire(DoctrineProductRepository::class));
         $di->set(SearchAnalytics::class, DI\autowire(FilesystemSearchAnalytics::class));
-        $di->set(Clock::class, DI\autowire(DateTimeClock::class));
         $di->set(ProductListHandler::class, DI\autowire(ProductListHandler::class));
 
         return $di;
