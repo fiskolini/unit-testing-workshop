@@ -10,5 +10,18 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class ProductListHandlerTest extends TestCase
 {
-    // Silence is golden
+    public function testHandleProductList_searchAnalyticsTrack_shouldBeCalledOnce(): void
+    {
+        $repository = $this->createStub(ProductRepository::class);
+        $searchAnalytics = $this->createMock(SearchAnalytics::class);
+        $serverRequest = $this->createStub(ServerRequestInterface::class);
+
+        $searchAnalytics
+            ->expects($this->once())
+            ->method('track')
+            ->with(['price' => null, 'name' => null]);
+
+        $handler = new ProductListHandler($repository, $searchAnalytics);
+        $handler->handle($serverRequest);
+    }
 }

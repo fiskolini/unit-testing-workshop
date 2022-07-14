@@ -15,4 +15,10 @@ final class AmountTest extends TestCase
         $cents = $amount->getCents();
         self::assertEquals(1000, $cents);
     }
+
+    public function testConstructor_WithNegativeCents_ThrowsException(): void
+    {
+        $this->expectException(AmountBelowZeroException::class);
+        new Amount(-1);
+    }
 }

@@ -4,13 +4,18 @@ declare(strict_types=1);
 namespace App\Catalog\Value;
 
 
+use App\Catalog\Exception\AmountBelowZeroException;
+
 final class Amount
 {
     private int $cents;
 
-    // TODO #01 cover this with unit test
     public function __construct(int $cents)
     {
+        if ($cents < 0) {
+            throw new AmountBelowZeroException($cents);
+        }
+
         $this->cents = $cents;
     }
 
